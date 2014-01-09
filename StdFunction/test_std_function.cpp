@@ -6,6 +6,28 @@
 #include <vector>
 #include <numeric>		// std::iota()
 
+//template <typename T>
+//void AddT(T a, T b, T &c)
+//{
+//	c = a + b;
+//}
+
+template <typename T>
+T AddT(T a, T b)
+{
+	return a + b;
+}
+
+//void Add(int a, int b, int &c)
+//{
+//	c = a + b;
+//}
+
+int Add(int a, int b)
+{
+	return a + b;
+}
+
 int main(void)
 {
 	// Changes given string to upper characters.
@@ -13,6 +35,17 @@ int main(void)
 	std::cout << s1 << std::endl;
 	std::transform(s1.cbegin(), s1.cend(), s1.begin(), std::function<int(int)>(std::toupper));
 	std::cout << s1 << std::endl;
+
+	// C = A + B using std::function.
+	std::vector<int> a(3, 1), b(3), c;
+	c.reserve(a.size());
+	std::transform(a.cbegin(), a.cend(), b.cbegin(), std::back_inserter(c), std::function<int(int, int)>(Add));
+
+	// NOTE: the function called by std::function() should not be a function template.
+	//std::vector<int> d(3, 1), e(3), f;
+	//f.reserve(d.size());
+	//std::transform(d.cbegin(), d.cend(), e.cbegin(), std::back_inserter(f), std::function<int(int, int)>(AddT));
+
 
 	// Increase given vector by 1 and return it to another vector using lambda expression.
 	std::vector<int> v1(10), v2(10);
