@@ -48,11 +48,16 @@ int main(void)
 
 
 	// Increase given vector by 1 and return it to another vector using lambda expression.
-	std::vector<int> v1(10), v2(10);
+	std::vector<int> v1(10), v2(10), v3;
 	std::iota(v1.begin(), v1.end(), 0);
 	std::transform(v1.cbegin(), v1.cend(), v2.begin(), [](int n) { return n + 1; });	// v2[*] = v1[*] + 1
+	v3.reserve(v1.size());
+	std::transform(v1.cbegin(), v1.cend(), std::back_inserter(v3), [](int n) { return n + 1; });
 
 	// A = B + C using lambda expression.
-	std::vector<int> input1(3, 1), input2(3, 1), output1(3);
+	std::vector<int> input1(3), input2(3, 1), output1(3), output2;
+	std::iota(input1.begin(), input1.end(), 0);
 	std::transform(input1.cbegin(), input1.cend(), input2.cbegin(), output1.begin(), [](int a, int b) { return a + b; });	// C[*] = A[*] + B[*]
+	output2.reserve(v1.size());
+	std::transform(input1.cbegin(), input1.cend(), input2.cbegin(), std::back_inserter(output2), [](int a, int b) { return a + b; });
 }
